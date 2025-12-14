@@ -76,10 +76,6 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-import express from "express";
-import cors from "cors";
-import fetch from "node-fetch";
-
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -161,5 +157,3 @@ app.post("/generate-video", async (req, res) => {
   users[email] -= custo;
   res.json({ credits: users[email], video_url });
 });
-
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

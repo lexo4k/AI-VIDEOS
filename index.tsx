@@ -1,10 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+vercel/install-and-configure-vercel-w-hy8l62
 import { inject } from '@vercel/analytics';
 import App from './App';
 
 // Initialize Vercel Web Analytics
 inject();
+import { injectSpeedInsights } from '@vercel/speed-insights';
+import App from './App';
+
+// Initialize Vercel Speed Insights for performance monitoring
+injectSpeedInsights();
+main
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

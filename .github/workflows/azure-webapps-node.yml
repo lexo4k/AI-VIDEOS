@@ -78,7 +78,6 @@ jobs:
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         
 const PORT = process.env.PORT || 3000;
-
 // Usuários e créditos
 let users = {};
 

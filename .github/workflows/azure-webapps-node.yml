@@ -1,3 +1,9 @@
+# Workflow to build and deploy the Node app to Azure WebApp.
+# Two auth options:
+# 1) Service Principal: set secret AZURE_CREDENTIALS (JSON from `az ad sp create-for-rbac --sdk-auth`).
+# 2) Publish Profile: set secret AZURE_WEBAPP_PUBLISH_PROFILE (XML from "Get publish profile").
+# Also set AZURE_WEBAPP_NAME as repository secret with the App Service name or replace env.WEBAPP_NAME below.
+
 name: Deploy Node app to Azure WebApp
 
 on:
@@ -9,7 +15,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}  # ou substitua por 'NOME_DO_SEU_APP'
+      WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -25,7 +32,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Login via Service Principal (se existir AZURE_CREDENTIALS)
+      # If you provide AZURE_CREDENTIALS (Service Principal JSON), this will login and deploy
       - name: Login to Azure (Service Principal)
         if: ${{ secrets.AZURE_CREDENTIALS != '' }}
         uses: azure/login@v1
@@ -39,7 +46,7 @@ jobs:
           app-name: ${{ env.WEBAPP_NAME }}
           package: '${{ github.workspace }}/'
 
-      # Deploy via Publish Profile (se existir AZURE_WEBAPP_PUBLISH_PROFILE)
+      # If you provide AZURE_WEBAPP_PUBLISH_PROFILE (publish profile XML), this will deploy using the profile
       - name: Deploy to Azure (Publish Profile)
         if: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE != '' }}
         uses: azure/webapps-deploy@v2
@@ -49,3 +56,4 @@ jobs:
 
       - name: Done
         run: echo "Deploy finished"
+        

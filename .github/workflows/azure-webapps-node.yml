@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}  # ou substitua por 'NOME_DO_SEU_APP'
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
